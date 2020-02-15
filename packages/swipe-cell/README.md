@@ -6,7 +6,7 @@
 
 ```json
 "usingComponents": {
-  "van-swipe-cell": "path/to/vant-weapp/dist/swipe-cell/index"
+  "van-swipe-cell": "path/to/@vant/weapp/dist/swipe-cell/index"
 }
 ```
 
@@ -25,6 +25,8 @@
 ```
 
 ### 异步关闭
+
+当开启`async-close`时， 通过绑定`close`事件，可以自定义两侧滑动内容点击时的关闭行为
 
 ```html
 <van-swipe-cell id="swipe-cell" right-width="{{ 65 }}" left-width="{{ 65 }}" async-close bind:close="onClose">
@@ -57,6 +59,42 @@ Page({
 });
 ```
 
+### 主动打开
+
+```html
+<van-swipe-cell id="swipe-cell2" right-width="{{ 65 }}" left-width="{{ 65 }}" name="示例" bind:open="onOpen" >
+    <view slot="left" class="van-swipe-cell__left">选择</view>
+    <van-cell-group>
+      <van-cell title="单元格" value="内容" />
+    </van-cell-group>
+    <view slot="right" class="van-swipe-cell__right">删除</view>
+  </van-swipe-cell>
+```
+
+```js
+Page({
+  onOpen(event) {
+    const { position, name } = event.detail;
+    switch (position) {
+      case 'left':
+        Notify({
+          type: 'primary',
+          message: `${name}${position}部分展示open事件被触发`
+        });
+        break;
+      case 'right':
+        Notify({
+          type: 'primary',
+          message: `${name}${position}部分展示open事件被触发`
+        });
+        break;
+    }
+  }
+});
+```
+
+
+
 ## API
 
 ### Props
@@ -82,7 +120,8 @@ Page({
 | 事件名 | 说明 | 参数 |
 |------|------|------|
 | click | 点击时触发 | 关闭时的点击位置 (`left` `right` `cell` `outside`) |
-| close | 点击时触发 | 整体是一个 Object，包含 `position`, `instance` 两个 key。 |
+| close | 关闭时触发 | 	{ position: 'left' \| 'right' , instance , name: string } |
+| open | 打开时触发 | 	{ position: 'left' \| 'right' , name: string } |
 
 ### close 参数
 
@@ -90,6 +129,7 @@ Page({
 |------|------|------|
 | position | *string* | 关闭时的点击位置 (`left` `right` `cell` `outside`) |
 | instance | *object* | SwipeCell 实例 |
+| name | 标识符 | *string* |
 
 ### 方法
 

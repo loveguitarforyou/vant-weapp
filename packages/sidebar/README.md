@@ -6,19 +6,21 @@
 
 ```json
 "usingComponents": {
-  "van-sidebar": "path/to/vant-weapp/dist/sidebar/index",
-  "van-sidebar-item": "path/to/vant-weapp/dist/sidebar-item/index"
+  "van-sidebar": "path/to/@vant/weapp/dist/sidebar/index",
+  "van-sidebar-item": "path/to/@vant/weapp/dist/sidebar-item/index"
 }
 ```
+
+> Vant Weapp 1.0 版本开始支持此组件，升级方式参见[快速上手](#/quickstart)
 
 ## 代码演示
 
 ### 基础用法
 
-通过在`van-sidebar`上设置`active`属性来控制选中项
+通过在`van-sidebar`上设置`activeKey`属性来控制选中项
 
 ```html
-<van-sidebar active="{{ active }}" bind:change="onChange">
+<van-sidebar active-key="{{ activeKey }}" bind:change="onChange">
   <van-sidebar-item title="标签名称" />
   <van-sidebar-item title="标签名称" />
   <van-sidebar-item title="标签名称" />
@@ -28,7 +30,7 @@
 ``` javascript
 Page({
   data: {
-    active: 0
+    activeKey: 0
   },
 
   onChange(event) {
@@ -45,7 +47,7 @@ Page({
 设置`dot`属性后，会在右上角展示一个小红点。设置`info`属性后，会在右上角展示相应的徽标
 
 ```html
-<van-sidebar active="{{ active }}">
+<van-sidebar active-key="{{ activeKey }}">
   <van-sidebar-item title="标签名称" dot />
   <van-sidebar-item title="标签名称" info="5" />
   <van-sidebar-item title="标签名称" info="99+" />
@@ -54,11 +56,11 @@ Page({
 
 ## API
 
-### Sidebar API
+### Sidebar Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
-| active | 选中项的索引 | *string \| number* | `0` | - |
+| activeKey | 选中项的索引 | *string \| number* | `0` | - |
 
 ### Sidebar Event
 
@@ -72,7 +74,7 @@ Page({
 |-----------|-----------|
 | custom-class | 根节点样式类 |
 
-### SidebarItem API
+### SidebarItem Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|

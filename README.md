@@ -4,9 +4,9 @@
 <h3 align="center">轻量、可靠的小程序 UI 组件库</h3>
 
 <p align="center">
-  <img src="https://img.shields.io/npm/v/vant-weapp.svg?style=flat-square" alt="npm version" />
-  <img src="https://img.shields.io/npm/dt/vant-weapp.svg?style=flat-square" alt="downloads" />
-  <img src="https://img.shields.io/npm/dm/vant-weapp.svg?style=flat-square" alt="downloads" />
+  <img src="https://img.shields.io/npm/v/@vant/weapp.svg?style=flat-square" alt="npm version" />
+  <img src="https://img.shields.io/npm/dt/@vant/weapp.svg?style=flat-square" alt="downloads" />
+  <img src="https://img.shields.io/npm/dm/@vant/weapp.svg?style=flat-square" alt="downloads" />
   <img src="https://img.shields.io/badge/License-MIT-blue.svg">
 </p>
 
@@ -30,7 +30,7 @@ Vant Weapp 是移动端 Vue 组件库 [Vant](https://github.com/youzan/vant) 的
 
 ## 使用之前
 
-使用 Vant Weapp 前，请确保你已经学习过微信官方的 [小程序简易教程](https://mp.weixin.qq.com/debug/wxadoc/dev/) 和 [自定义组件介绍](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/)。
+使用 Vant Weapp 前，请确保你已经学习过微信官方的 [小程序简易教程](https://developers.weixin.qq.com/miniprogram/dev/framework/) 和 [自定义组件介绍](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/)。
 
 ## 安装
 
@@ -39,11 +39,14 @@ Vant Weapp 是移动端 Vue 组件库 [Vant](https://github.com/youzan/vant) 的
 小程序已经支持使用 npm 安装第三方包，详见 [npm 支持](https://developers.weixin.qq.com/miniprogram/dev/devtools/npm.html?search-key=npm)
 
 ```bash
-# npm
-npm i vant-weapp -S --production
+# 通过 npm 安装
+npm i @vant/weapp -S --production
 
-# yarn
-yarn add vant-weapp --production
+# 通过 yarn 安装
+yarn add @vant/weapp --production
+
+# 安装 0.x 版本
+npm i vant-weapp -S --production
 ```
 
 ### 方式二. 下载代码

@@ -3,21 +3,47 @@ import { VantComponent } from '../common/component';
 import { button } from '../mixins/button';
 import { openType } from '../mixins/open-type';
 
+const FIT_MODE_MAP = {
+  none: 'center',
+  fill: 'scaleToFill',
+  cover: 'aspectFill',
+  contain: 'aspectFit'
+};
+
 VantComponent({
   mixins: [button, openType],
 
   classes: ['custom-class', 'loading-class', 'error-class', 'image-class'],
 
   props: {
-    src: String,
-    width: String,
-    height: String,
-    fit: {
+    src: {
       type: String,
-      value: 'fill'
+      observer() {
+        this.setData({
+          error: false,
+          loading: true
+        });
+      }
     },
     round: Boolean,
+    width: {
+      type: null,
+      observer: 'setStyle'
+    },
+    height: {
+      type: null,
+      observer: 'setStyle'
+    },
+    radius: null,
     lazyLoad: Boolean,
+    useErrorSlot: Boolean,
+    useLoadingSlot: Boolean,
+    showMenuByLongpress: Boolean,
+    fit: {
+      type: String,
+      value: 'fill',
+      observer: 'setMode'
+    },
     showError: {
       type: Boolean,
       value: true
@@ -25,54 +51,29 @@ VantComponent({
     showLoading: {
       type: Boolean,
       value: true
-    },
-    showMenuByLongpress: Boolean,
-
-    // 受小程序slot限制所需要的属性
-    useLoadingSlot: Boolean,
-    useErrorSlot: Boolean,
-  },
-
-  data: {
-    fitWeapp: 'aspectFit',
-    FIT_MODE_MAP: {
-      contain: 'aspectFit',
-      cover: 'aspectFill',
-      fill: 'scaleToFill',
-      none: 'center',
-
-      // TODO: 这个没有原生的属性，需要后面实现，暂时先用contain;
-      'scale-down': 'aspectFit'
-    },
-    loading: true,
-    error: false
-  },
-
-  watch: {
-    src() {
-      this.setData({
-        loading: true,
-        error: false
-      });
     }
   },
 
+  data: {
+    error: false,
+    loading: true,
+    viewStyle: '',
+  },
+
   mounted() {
-    this.init();
+    this.setMode();
+    this.setStyle();
   },
 
   methods: {
-    init() {
-      const { FIT_MODE_MAP, fit } = this.data;
-
+    setMode() {
       this.setData({
-        mode: FIT_MODE_MAP[fit],
-        style: this.getStyle(),
+        mode: FIT_MODE_MAP[this.data.fit],
       });
     },
 
-    getStyle() {
-      const { width, height } = this.data;
+    setStyle() {
+      const { width, height, radius } = this.data;
       let style = '';
 
       if (isDef(width)) {
@@ -83,7 +84,12 @@ VantComponent({
         style += `height: ${addUnit(height)};`;
       }
 
-      return style;
+      if (isDef(radius)) {
+        style += 'overflow: hidden;';
+        style += `border-radius: ${addUnit(radius)};`;
+      }
+
+      this.setData({ viewStyle: style });
     },
 
     onLoad(event) {
@@ -97,7 +103,7 @@ VantComponent({
     onError(event) {
       this.setData({
         loading: false,
-        error: true,
+        error: true
       });
 
       this.$emit('error', event.detail);
@@ -105,6 +111,6 @@ VantComponent({
 
     onClick(event) {
       this.$emit('click', event.detail);
-    },
+    }
   }
 });

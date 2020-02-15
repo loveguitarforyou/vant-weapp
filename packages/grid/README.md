@@ -10,10 +10,12 @@
 
 ```json
 "usingComponents": {
-  "van-grid": "path/to/vant-weapp/dist/grid/index",
-  "van-grid-item": "path/to/vant-weapp/dist/grid-item/index"
+  "van-grid": "path/to/@vant/weapp/dist/grid/index",
+  "van-grid-item": "path/to/@vant/weapp/dist/grid-item/index"
 }
 ```
+
+> Vant Weapp 1.0 版本开始支持此组件，升级方式参见[快速上手](#/quickstart)
 
 ## 代码演示
 
@@ -142,6 +144,6 @@
 
 | 名称 | 说明 |
 |-----------|-----------|
-| default | 自定义宫格的所有内容，需要设置`use-slot`属性 |
+| - | 自定义宫格的所有内容，需要设置`use-slot`属性 |
 | icon | 自定义图标，如果设置了`use-slot`或者`icon`属性则不生效 |
 | text | 自定义文字，如果设置了`use-slot`或者`text`属性则不生效 |

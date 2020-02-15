@@ -1,6 +1,5 @@
 import { VantComponent } from '../common/component';
 import { Weapp } from 'definitions/weapp';
-import { addUnit } from '../common/utils';
 
 VantComponent({
   field: true,
@@ -8,14 +7,18 @@ VantComponent({
   classes: ['icon-class'],
 
   props: {
-    value: Number,
+    value: {
+      type: Number,
+      observer(value: number) {
+        if (value !== this.data.innerValue) {
+          this.setData({ innerValue: value });
+        }
+      }
+    },
     readonly: Boolean,
     disabled: Boolean,
     allowHalf: Boolean,
-    size: {
-      type: null,
-      observer: 'setSizeWithUnit'
-    },
+    size: null,
     icon: {
       type: String,
       value: 'star'
@@ -40,10 +43,7 @@ VantComponent({
       type: Number,
       value: 5
     },
-    gutter: {
-      type: null,
-      observer: 'setGutterWithUnit'
-    },
+    gutter: null,
     touchable: {
       type: Boolean,
       value: true
@@ -51,32 +51,10 @@ VantComponent({
   },
 
   data: {
-    innerValue: 0,
-    gutterWithUnit: undefined,
-    sizeWithUnit: '20px'
-  },
-
-  watch: {
-    value(value: number) {
-      if (value !== this.data.innerValue) {
-        this.setData({ innerValue: value });
-      }
-    }
+    innerValue: 0
   },
 
   methods: {
-    setSizeWithUnit(val) {
-      this.setData({
-        sizeWithUnit: addUnit(val)
-      });
-    },
-
-    setGutterWithUnit(val) {
-      this.setData({
-        gutterWithUnit: addUnit(val)
-      });
-    },
-
     onSelect(event: Weapp.Event) {
       const { data } = this;
       const { score } = event.currentTarget.dataset;

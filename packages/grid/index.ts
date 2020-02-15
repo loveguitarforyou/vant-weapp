@@ -1,17 +1,11 @@
 import { VantComponent } from '../common/component';
+import { addUnit } from '../common/utils';
 
 VantComponent({
   relation: {
     name: 'grid-item',
     type: 'descendant',
-    linked(child) {
-      this.children.push(child);
-    },
-    unlinked(child) {
-      this.children = this.children.filter(
-        (item: WechatMiniprogram.Component.TrivialInstance) => item !== child
-      );
-    }
+    current: 'grid',
   },
 
   props: {
@@ -45,6 +39,10 @@ VantComponent({
     }
   },
 
+  data: {
+    viewStyle: '',
+  },
+
   beforeCreate() {
     this.children = [];
   },
@@ -53,7 +51,7 @@ VantComponent({
     const { gutter } = this.data;
     if (gutter) {
       this.setData({
-        style: `padding-left: ${gutter}px`
+        viewStyle: `padding-left: ${addUnit(gutter)}`
       });
     }
   },

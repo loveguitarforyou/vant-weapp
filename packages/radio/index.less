@@ -12,7 +12,9 @@
   }
 
   &__icon {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     box-sizing: border-box;
     width: 1em;
     height: 1em;
@@ -20,6 +22,7 @@
     text-align: center;
     transition-property: color, border-color, background-color;
     .theme(border, '1px solid @radio-border-color');
+    .theme(font-size, '@radio-size');
     .theme(transition-duration, '@radio-transition-duration');
 
     &--round {
@@ -46,6 +49,7 @@
     word-wrap: break-word;
     .theme(margin-left, '@radio-label-margin');
     .theme(color, '@radio-label-color');
+    .theme(line-height, '@radio-size');
 
     &--left {
       float: left;

@@ -10,7 +10,7 @@
 
 ```json
 "usingComponents": {
-  "van-field": "path/to/vant-weapp/dist/field/index"
+  "van-field": "path/to/@vant/weapp/dist/field/index"
 }
 ```
 
@@ -102,6 +102,19 @@ Page({
   />
 </van-cell-group>
 ```
+### 内容对齐方式
+可以通过`input-align`属性设置内容的对齐方式
+
+```html
+ <van-cell-group>
+    <van-field
+      value="{{ username3 }}"
+      label="用户名"
+      placeholder="请输入用户名"
+      input-align="right"
+    />
+  </van-cell-group>
+```
 
 ### 高度自适应
 对于 textarea，可以通过`autosize`属性设置高度自适应
@@ -155,7 +168,7 @@ Page({
 
 同时 `placeholder-style` 对 `vertical-align`、`line-height` 等大量css属性都不生效。
 
-这一系列的问题导致了 placeholder 在真机上可能会出现偏移。vant-weapp 已经尽量抹平 textarea 在不同环境下的差异。
+这一系列的问题导致了 placeholder 在真机上可能会出现偏移。@vant/weapp 已经尽量抹平 textarea 在不同环境下的差异。
 
 微信已经将 `padding` 的问题列为修复中的问题，可以查看[微信开放社区](https://developers.weixin.qq.com/community/develop/issue/96)
 
@@ -201,6 +214,7 @@ Page({
 | right-icon | 右侧图标名称或图片链接，可选值见 [Icon 组件](#/icon) | *string* | - | - |
 | confirm-type | 设置键盘右下角按钮的文字，仅在 type='text' 时生效 | *string* | `done` | - |
 | confirm-hold | 点击键盘右下角按钮时是否保持键盘不收起，在 type='textarea' 时无效 | *boolean* | `false` | - |
+| hold-keyboard | focus 时，点击页面的时候不收起键盘 | *boolean* | `false` | 2.8.2 |
 | cursor-spacing | 输入框聚焦时底部与键盘的距离 | *number* | `50` | - |
 | adjust-position | 键盘弹起时，是否自动上推页面 | *boolean* | `true` | - |
 | show-confirm-bar | 是否显示键盘上方带有”完成“按钮那一栏，只对 textarea 有效 | *boolean* | `true` | - |

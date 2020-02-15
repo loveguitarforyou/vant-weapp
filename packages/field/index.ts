@@ -31,6 +31,7 @@ VantComponent({
     customStyle: String,
     confirmType: String,
     confirmHold: Boolean,
+    holdKeyboard: Boolean,
     errorMessage: String,
     arrowDirection: String,
     placeholderStyle: String,
@@ -82,7 +83,9 @@ VantComponent({
     onInput(event: Weapp.Event) {
       const { value = '' } = event.detail || {};
 
-      this.setData({ value }, () => {
+      this.setData({ value });
+
+      wx.nextTick(() => {
         this.emitChange(value);
       });
     },
@@ -102,7 +105,9 @@ VantComponent({
     },
 
     onClear() {
-      this.setData({ value: '' }, () => {
+      this.setData({ value: '' });
+
+      wx.nextTick(() => {
         this.emitChange('');
         this.$emit('clear', '');
       });
@@ -115,6 +120,8 @@ VantComponent({
     emitChange(value) {
       this.$emit('input', value);
       this.$emit('change', value);
-    }
+    },
+
+    noop() {}
   }
 });

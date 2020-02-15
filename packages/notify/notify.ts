@@ -39,7 +39,7 @@ function getContext() {
 }
 
 export default function Notify(options: NotifyOptions | string) {
-  options = Object.assign({}, defaultOptions, parseOptions(options));
+  options = { ...defaultOptions, ...parseOptions(options) } as NotifyOptions;
 
   const context = options.context || getContext();
   const notify = context.selectComponent(options.selector);
@@ -48,9 +48,21 @@ export default function Notify(options: NotifyOptions | string) {
   delete options.selector;
 
   if (notify) {
-    notify.set(options);
+    notify.setData(options);
     notify.show();
-  } else {
-    console.warn('未找到 van-notify 节点，请确认 selector 及 context 是否正确');
+    return notify;
   }
+
+  console.warn('未找到 van-notify 节点，请确认 selector 及 context 是否正确');
 }
+
+Notify.clear = function(options?: NotifyOptions) {
+  options = { ...defaultOptions, ...parseOptions(options) } as NotifyOptions;
+
+  const context = options.context || getContext();
+  const notify = context.selectComponent(options.selector);
+
+  if (notify) {
+    notify.hide();
+  }
+};

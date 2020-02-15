@@ -10,7 +10,7 @@
 
 ```json
 "usingComponents": {
-  "van-icon": "path/to/vant-weapp/dist/icon/index"
+  "van-icon": "path/to/@vant/weapp/dist/icon/index"
 }
 ```
 
@@ -34,6 +34,28 @@
 <van-icon name="chat" info="9" />
 <van-icon name="chat" info="99+" />
 ```
+
+### 图标颜色
+
+设置`color`属性来控制图标颜色
+
+```html
+<van-icon name="chat" color="red" />
+```
+
+### 图标大小
+
+设置`size`属性来控制图标大小
+
+```html
+<van-icon name="chat" size="50px" />
+```
+
+## 常见问题
+
+### 开发者工具上提示 Faild to load font 是什么情况？
+
+这个是开发者工具本身的问题，可以忽略，具体可以查看[微信小程序文档](https://developers.weixin.qq.com/miniprogram/dev/api/ui/font/wx.loadFontFace.html)注意第5条
 
 ## API
 

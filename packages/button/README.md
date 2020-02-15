@@ -1,4 +1,4 @@
-# Button 按钮
+3w# Button 按钮
 
 ### 引入
 
@@ -6,7 +6,7 @@
 
 ```json
 "usingComponents": {
-  "van-button": "path/to/vant-weapp/dist/button/index"
+  "van-button": "path/to/@vant/weapp/dist/button/index"
 }
 ```
 
@@ -95,6 +95,14 @@
 <van-button color="#7232dd">单色按钮</van-button>
 <van-button color="#7232dd" plain>单色按钮</van-button>
 <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">渐变色按钮</van-button>
+```
+
+### 块级元素
+
+通过`block`属性可以将按钮的元素类型设置为块级元素
+
+```html
+<van-button type="primary" block>块级元素</van-button>
 ```
 
 ## API

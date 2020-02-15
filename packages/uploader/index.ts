@@ -1,25 +1,15 @@
 import { VantComponent } from '../common/component';
-import { isImageFile } from './utils';
-import { addUnit } from '../common/utils';
-
-interface File {
-  path: string; // 上传临时地址
-  url: string; // 上传临时地址
-  size: number; // 上传大小
-  name: string; // 上传文件名称，accept="image" 不存在
-  type: string; // 上传类型，accept="image" 不存在
-  time: number; // 上传时间，accept="image" 不存在
-  image: boolean; // 是否为图片
-}
+import { isImageFile, isVideo } from './utils';
 
 VantComponent({
   props: {
     disabled: Boolean,
+    multiple: Boolean,
     uploadText: String,
+    useBeforeRead: Boolean,
     previewSize: {
       type: null,
-      value: 90,
-      observer: 'setComputedPreviewSize'
+      value: 90
     },
     name: {
       type: [Number, String],
@@ -28,6 +18,14 @@ VantComponent({
     accept: {
       type: String,
       value: 'image'
+    },
+    sizeType: {
+      type: Array,
+      value: ['original', 'compressed']
+    },
+    capture: {
+      type: Array,
+      value: ['album', 'camera']
     },
     fileList: {
       type: Array,
@@ -42,6 +40,10 @@ VantComponent({
       type: Number,
       value: 100
     },
+    deletable: {
+      type: Boolean,
+      value: true
+    },
     previewImage: {
       type: Boolean,
       value: true
@@ -54,8 +56,18 @@ VantComponent({
       type: String,
       value: 'scaleToFill'
     },
-    useSlot: Boolean,
-    useBeforeRead: Boolean
+    camera: {
+      type: String,
+      value: 'back'
+    },
+    compressed: {
+      type: Boolean,
+      value: true
+    },
+    maxDuration: {
+      type: Number,
+      value: 60
+    }
   },
 
   data: {
@@ -70,29 +82,25 @@ VantComponent({
       const lists = fileList.map(item => ({
         ...item,
         isImage:
-          typeof item.isImage === 'undefined'
-            ? isImageFile(item)
-            : item.isImage
+          typeof item.isImage === 'undefined' ? isImageFile(item) : item.isImage
       }));
       this.setData({ lists, isInCount: lists.length < maxCount });
-    },
-
-    setComputedPreviewSize(val) {
-      this.setData({
-        computedPreviewSize: addUnit(val)
-      });
     },
 
     startUpload() {
       if (this.data.disabled) return;
       const {
         name = '',
-        capture = ['album', 'camera'],
-        maxCount = 100,
-        multiple = false,
+        capture,
+        maxCount,
+        multiple,
         maxSize,
         accept,
+        sizeType,
         lists,
+        camera,
+        compressed,
+        maxDuration,
         useBeforeRead = false // 是否定义了 beforeRead
       } = this.data;
 
@@ -104,12 +112,20 @@ VantComponent({
           wx.chooseImage({
             count: multiple ? (newMaxCount > 9 ? 9 : newMaxCount) : 1, // 最多可以选择的数量，如果不支持多选则数量为1
             sourceType: capture, // 选择图片的来源，相册还是相机
-            success: res => {
-              resolve(res);
-            },
-            fail: err => {
-              reject(err);
-            }
+            sizeType,
+            success: resolve,
+            fail: reject
+          });
+        });
+      } else if (accept === 'video') {
+        chooseFile = new Promise((resolve, reject) => {
+          wx.chooseVideo({
+            sourceType: capture,
+            compressed,
+            maxDuration,
+            camera,
+            success: resolve,
+            fail: reject
           });
         });
       } else {
@@ -117,47 +133,63 @@ VantComponent({
           wx.chooseMessageFile({
             count: multiple ? newMaxCount : 1, // 最多可以选择的数量，如果不支持多选则数量为1
             type: 'file',
-            success(res) {
-              resolve(res);
-            },
-            fail: err => {
-              reject(err);
-            }
+            success: resolve,
+            fail: reject
           });
         });
       }
 
-      chooseFile.then(res => {
-        const file: File | File[] = multiple ? res.tempFiles : res.tempFiles[0];
+      chooseFile
+        .then(
+          (
+            res:
+              | WechatMiniprogram.ChooseImageSuccessCallbackResult
+              | WechatMiniprogram.ChooseMessageFileSuccessCallbackResult
+              | WechatMiniprogram.ChooseVideoSuccessCallbackResult
+          ) => {
+            let file = null;
 
-        // 检查文件大小
-        if (file instanceof Array) {
-          const sizeEnable = file.every(item => item.size <= maxSize);
-          if (!sizeEnable) {
-            this.$emit('oversize', { name });
-            return;
-          }
-        } else if (file.size > maxSize) {
-          this.$emit('oversize', { name });
-          return;
-        }
-
-        // 触发上传之前的钩子函数
-        if (useBeforeRead) {
-          this.$emit('before-read', {
-            file,
-            name,
-            callback: result => {
-              if (result) {
-                // 开始上传
-                this.$emit('after-read', { file, name });
-              }
+            if (isVideo(res, accept)) {
+              file = {
+                path: res.tempFilePath,
+                ...res
+              };
+            } else {
+              file = multiple ? res.tempFiles : res.tempFiles[0];
             }
-          });
-        } else {
-          this.$emit('after-read', { file, name });
-        }
-      });
+
+            // 检查文件大小
+            if (file instanceof Array) {
+              const sizeEnable = file.every(item => item.size <= maxSize);
+              if (!sizeEnable) {
+                this.$emit('oversize', { name });
+                return;
+              }
+            } else if (file.size > maxSize) {
+              this.$emit('oversize', { name });
+              return;
+            }
+
+            // 触发上传之前的钩子函数
+            if (useBeforeRead) {
+              this.$emit('before-read', {
+                file,
+                name,
+                callback: (result: boolean) => {
+                  if (result) {
+                    // 开始上传
+                    this.$emit('after-read', { file, name });
+                  }
+                }
+              });
+            } else {
+              this.$emit('after-read', { file, name });
+            }
+          }
+        )
+        .catch(error => {
+          this.$emit('error', error);
+        });
     },
 
     deleteItem(event) {

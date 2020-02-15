@@ -10,8 +10,8 @@ Layout 提供了`van-row`和`van-col`两个组件来进行行列布局
 
 ```json
 "usingComponents": {
-  "van-row": "path/to/vant-weapp/dist/row/index",
-  "van-col": "path/to/vant-weapp/dist/col/index"
+  "van-row": "path/to/@vant/weapp/dist/row/index",
+  "van-col": "path/to/@vant/weapp/dist/col/index"
 }
 ```
 
@@ -53,13 +53,13 @@ Layout 组件提供了`24列栅格`，通过在`Col`上添加`span`属性设置�
 
 ## API
 
-### Row API
+### Row Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
 | gutter | 列元素之间的间距（单位为px） | *string \| number* | - | - |
 
-### Col API
+### Col Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|

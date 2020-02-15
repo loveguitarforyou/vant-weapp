@@ -10,7 +10,7 @@
 
 ```json
 "usingComponents": {
-  "van-stepper": "path/to/vant-weapp/dist/stepper/index"
+  "van-stepper": "path/to/@vant/weapp/dist/stepper/index"
 }
 ```
 
@@ -62,6 +62,14 @@ Page({
 
 ```html
 <van-stepper value="{{ 1 }}" disabled />
+```
+
+### 关闭长按
+
+通过设置`long-press`属性决定步进器是否开启长按手势
+
+```html
+<van-stepper value="{{ 1 }}" long-press="{{ false }}" />
 ```
 
 ### 固定小数位数
@@ -125,6 +133,9 @@ Page({
 | show-plus | 是否显示增加按钮 | *boolean* | `true` | - |
 | show-minus | 是否显示减少按钮 | *boolean* | `true` | - |
 | decimal-length | 固定显示的小数位数 | *number* | - | - |
+| disable-plus | 是否禁用增加按钮 | *boolean* | - | - |
+| disable-minus | 是否禁用减少按钮 | *boolean* | - | - |
+| long-press | 是否开启长按手势 | *boolean* | `true` | - |
 
 ### Events
 

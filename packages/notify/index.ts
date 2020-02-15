@@ -29,14 +29,23 @@ VantComponent({
     }
   },
 
+  data: {
+    show: false,
+  },
+
+  created() {
+    const { statusBarHeight } = wx.getSystemInfoSync();
+    this.setData({ statusBarHeight });
+  },
+
   methods: {
     show() {
       const { duration, onOpened } = this.data;
 
       clearTimeout(this.timer);
-      this.setData({
-        show: true
-      }, onOpened);
+      this.setData({ show: true });
+
+      wx.nextTick(onOpened);
 
       if (duration > 0 && duration !== Infinity) {
         this.timer = setTimeout(() => {
@@ -49,9 +58,9 @@ VantComponent({
       const { onClose } = this.data;
 
       clearTimeout(this.timer);
-      this.setData({
-        show: false
-      }, onClose);
+      this.setData({ show: false });
+
+      wx.nextTick(onClose);
     },
 
     onTap(event: Weapp.Event) {

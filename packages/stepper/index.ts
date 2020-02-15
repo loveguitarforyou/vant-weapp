@@ -17,11 +17,39 @@ VantComponent({
   classes: ['input-class', 'plus-class', 'minus-class'],
 
   props: {
-    value: null,
+    value: {
+      type: null,
+      observer(value) {
+        if (value === '') {
+          return;
+        }
+
+        const newValue = this.range(value);
+
+        if (typeof newValue === 'number' && +this.data.value !== newValue) {
+          this.setData({ value: newValue });
+        }
+      },
+    },
     integer: Boolean,
     disabled: Boolean,
-    inputWidth: null,
-    buttonSize: null,
+    inputWidth: {
+      type: null,
+      observer() {
+        this.setData({
+          inputStyle: this.computeInputStyle()
+        });
+      },
+    },
+    buttonSize: {
+      type: null,
+      observer() {
+        this.setData({
+          inputStyle: this.computeInputStyle(),
+          buttonStyle: this.computeButtonStyle()
+        });
+      }
+    },
     asyncChange: Boolean,
     disableInput: Boolean,
     decimalLength: {
@@ -47,34 +75,13 @@ VantComponent({
     showMinus: {
       type: Boolean,
       value: true
-    }
-  },
-
-  watch: {
-    value(value) {
-      if (value === '') {
-        return;
-      }
-
-      const newValue = this.range(value);
-
-      if (typeof newValue === 'number' && +this.data.value !== newValue) {
-        this.setData({ value: newValue });
-      }
     },
-
-    inputWidth() {
-      this.set({
-        inputStyle: this.computeInputStyle()
-      });
+    disablePlus: Boolean,
+    disableMinus: Boolean,
+    longPress: {
+      type: Boolean,
+      value: true
     },
-
-    buttonSize() {
-      this.set({
-        inputStyle: this.computeInputStyle(),
-        buttonStyle: this.computeButtonStyle()
-      });
-    }
   },
 
   data: {
@@ -92,10 +99,10 @@ VantComponent({
   methods: {
     isDisabled(type: string) {
       if (type === 'plus') {
-        return this.data.disabled || this.data.value >= this.data.max;
+        return this.data.disabled || this.data.disablePlus || this.data.value >= this.data.max;
       }
 
-      return this.data.disabled || this.data.value <= this.data.min;
+      return this.data.disabled || this.data.disableMinus || this.data.value <= this.data.min;
     },
 
     onFocus(event: Weapp.Event) {
@@ -157,6 +164,9 @@ VantComponent({
     },
 
     onTouchStart(event: Weapp.Event) {
+      if (!this.data.longPress) {
+        return;
+      }
       clearTimeout(this.longPressTimer);
 
       const { type } = event.currentTarget.dataset;
@@ -171,6 +181,9 @@ VantComponent({
     },
 
     onTouchEnd() {
+      if (!this.data.longPress) {
+        return;
+      }
       clearTimeout(this.longPressTimer);
     },
 

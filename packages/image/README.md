@@ -1,20 +1,26 @@
 # Image 图片
 
+### 介绍
+
+增强版的 img 标签，提供多种图片填充模式，支持图片懒加载、加载中提示、加载失败提示。
+
 ### 引入
 
 在`app.json`或`index.json`中引入组件，详细介绍见[快速上手](#/quickstart#yin-ru-zu-jian)
 
 ```json
 "usingComponents": {
-  "van-image": "path/to/vant-weapp/dist/image/index"
+  "van-image": "path/to/@vant/weapp/dist/image/index"
 }
 ```
+
+> Vant Weapp 1.0 版本开始支持此组件，升级方式参见[快速上手](#/quickstart)
 
 ## 代码演示
 
 ### 基础用法
 
-基础用法与[原生](https://developers.weixin.qq.com/miniprogram/dev/component/image.html)image一致，可以设置`src`、`width`、`height`等原生属性
+基础用法与原生 [image]((https://developers.weixin.qq.com/miniprogram/dev/component/image.html)) 标签一致，可以设置`src`、`width`、`height`等原生属性
 
 ```html
 <van-image
@@ -94,18 +100,19 @@
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |------|------|------|------|------|
-| src | 图片链接 | `string` | - | - |
-| fit | 图片填充模式 | `string` | `fill` | - |
-| alt | 替代文本 | `string` | - | - |
-| width | 宽度，默认单位为`px` | `string | number` | - | - |
-| height | 高度，默认单位为`px` | `string | number` | - | - |
-| round | 是否显示为圆形 | `boolean` | `false` | - |
-| lazy-load | 是否懒加载 | `boolean` | `false` | - |
-| show-error | 是否展示图片加载失败提示 | `boolean` | `true` | - |
-| show-loading | 是否展示图片加载中提示 | `boolean` | `true` | - |
-| show-menu-by-longpress | 开启长按图片显示识别小程序码菜单 | `boolean` | `false` | - |
-| use-loading-slot | 是否使用了loading slot | `boolean` | `false` | - |
-| use-error-slot | 是否使用了error slot | `boolean` | `false` | - |
+| src | 图片链接 | *string* | - | - |
+| fit | 图片填充模式 | *string* | *fill* | - |
+| alt | 替代文本 | *string* | - | - |
+| width | 宽度，默认单位为`px` | *string \| number* | - | - |
+| height | 高度，默认单位为`px` | *string \| number* | - | - |
+| radius | 圆角大小，默认单位为`px` | *string \| number* | `0` | - |
+| round | 是否显示为圆形 | *boolean* | `false` | - |
+| lazy-load | 是否懒加载 | *boolean* | `false` | - |
+| show-error | 是否展示图片加载失败提示 | *boolean* | `true` | - |
+| show-loading | 是否展示图片加载中提示 | *boolean* | `true` | - |
+| use-error-slot | 是否使用 error 插槽 | *boolean* | `false` | - |
+| use-loading-slot | 是否使用 loading 插槽 | *boolean* | `false` | - |
+| show-menu-by-longpress | 是否开启长按图片显示识别小程序码菜单 | *boolean* | `false` | - |
 
 ### 图片填充模式
 
@@ -115,7 +122,6 @@
 | cover | 保持宽高缩放图片，使图片的短边能完全显示出来，裁剪长边 |
 | fill | 拉伸图片，使图片填满元素 |
 | none | 保持图片原有尺寸 |
-| scale-down | 由于小程序原生不支持这个属性，所以暂时和contain保持一致 |
 
 ### Events
 

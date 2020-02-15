@@ -6,7 +6,7 @@
 
 ```json
 "usingComponents": {
-  "van-search": "path/to/vant-weapp/dist/search/index"
+  "van-search": "path/to/@vant/weapp/dist/search/index"
 }
 ```
 
@@ -34,6 +34,30 @@
 />
 ```
 
+### 自定义背景色
+
+通过 `background` 属性可以自定义组件背景色
+
+```html
+<van-search placeholder="Placeholder" value="{{ value }}" background="#c8c9cc"/>
+```
+
+### 禁用搜索框
+
+通过 `disabled` 属性可以将组件设置为禁用状态
+
+```html
+<van-search placeholder="请输入搜索关键词" value="{{ value }}" disabled/>
+```
+
+### 搜索框内容对齐
+
+通过 `input-align` 属性可以设置搜索框内容的对齐方式
+
+```html
+<van-search placeholder="Placeholder" value="{{ value }}" input-align="center"/>
+```
+
 ### 自定义行动按钮
 
 `van-search` 支持自定义右侧取消按钮，使用名字为 action 的 slot，并设置 use-action-slot 为 true 即可。
@@ -43,10 +67,33 @@
   value="{{ value }}"
   placeholder="请输入搜索关键词"
   use-action-slot
+  bind:change="onChange"
   bind:search="onSearch"
 >
-  <view slot="action" bind:tap="onSearch">搜索</view>
+  <view slot="action" bind:tap="onClick">搜索</view>
 </van-search>
+```
+
+```javascript
+Page({
+  data: {
+    value: ''
+  },
+
+  onChange(e) {
+    this.setData({
+      value: e.detail
+    });
+  },
+
+  onSearch() {
+    Toast('搜索' + this.data.value);
+  },
+
+  onClick() {
+    Toast('搜索' + this.data.value);
+  },
+});
 ```
 
 ## API

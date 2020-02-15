@@ -6,8 +6,8 @@
 
 ```json
 "usingComponents": {
-  "van-cell": "path/to/vant-weapp/dist/cell/index",
-  "van-cell-group": "path/to/vant-weapp/dist/cell-group/index"
+  "van-cell": "path/to/@vant/weapp/dist/cell/index",
+  "van-cell-group": "path/to/@vant/weapp/dist/cell-group/index"
 }
 ```
 
@@ -93,9 +93,17 @@
 </van-cell>
 ```
 
+### 垂直居中
+
+通过`center`属性可以让`Cell`的左右内容都垂直居中
+
+```html
+<van-cell center title="单元格" value="内容" label="描述信息" />
+```
+
 ## API
 
-### CellGroup API
+### CellGroup Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
@@ -108,7 +116,7 @@
 |-----------|-----------|
 | custom-class | 根节点样式类 |
 
-### Cell API
+### Cell Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
@@ -138,7 +146,7 @@
 
 | 名称 | 说明 |
 |-----------|-----------|
-| default | 自定义`value`显示内容，如果设置了`value`属性则不生效 |
+| - | 自定义`value`显示内容，如果设置了`value`属性则不生效 |
 | title | 自定义`title`显示内容，如果设置了`title`属性则不生效 |
 | label | 自定义`label`显示内容，需要设置 `use-label-slot`属性 |
 | icon | 自定义`icon`显示内容，如果设置了`icon`属性则不生效 |

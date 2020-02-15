@@ -6,7 +6,7 @@
 
 ```json
 "usingComponents": {
-  "van-steps": "path/to/vant-weapp/dist/steps/index"
+  "van-steps": "path/to/@vant/weapp/dist/steps/index"
 }
 ```
 
@@ -72,13 +72,14 @@ Page({
 
 ## API
 
-### Steps API
+### Steps Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-------------|
 | active | 当前步骤 | *number* | 0 | - |
 | direction | 显示方向，可选值为 `horizontal` `vertical` | *string* | `horizontal` | - |
 | active-color | 激活状态颜色 | *string* | `#07c160` | - |
+| inactive-color | 未激活状态颜色 | *string* | `#969799` | - |
 | active-icon | 激活状态底部图标，可选值见 [Icon 组件](#/icon) | *string* | `checked` | - |
 | inactive-icon | 未激活状态底部图标，可选值见 [Icon 组件](#/icon) | *string* | - | - |
 
@@ -87,3 +88,4 @@ Page({
 | 类名 | 说明 |
 |-----------|-----------|
 | custom-class | 根节点样式类 |
+| desc-class | 描述信息样式类 |

@@ -1,17 +1,13 @@
 # DropdownMenu 下拉菜单
 
-### 介绍
-
-下拉菜单
-
 ### 引入
 
 在`app.json`或`index.json`中引入组件，默认为`ES6`版本，`ES5`引入方式参见[快速上手](#/quickstart)
 
 ```json
 "usingComponents": {
-  "van-dropdown-menu": "path/to/vant-weapp/dist/dropdown-menu/index",
-  "van-dropdown-item": "path/to/vant-weapp/dist/dropdown-item/index"
+  "van-dropdown-menu": "path/to/@vant/weapp/dist/dropdown-menu/index",
+  "van-dropdown-item": "path/to/@vant/weapp/dist/dropdown-item/index"
 }
 ```
 

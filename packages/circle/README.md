@@ -6,7 +6,7 @@
 
 ```json
 "usingComponents": {
-  "van-circle": "path/to/vant-weapp/dist/circle/index"
+  "van-circle": "path/to/@vant/weapp/dist/circle/index"
 }
 ```
 
@@ -17,7 +17,7 @@
 `value`属性表示进度条的目标进度。
 
 ```html
-<van-circle :value="{{ 30 }}" :text="text" />
+<van-circle value="{{ 30 }}" text="text" />
 ```
 
 ### 宽度定制
@@ -25,7 +25,7 @@
 通过`stroke-width`属性来控制进度条宽度
 
 ```html
-<van-circle :value="{{ value }}" :stroke-width="6" text="宽度定制" />
+<van-circle value="{{ value }}" stroke-width="6" text="宽度定制" />
 ```
 
 ### 颜色定制
@@ -89,7 +89,7 @@ Page({
 | 参数         | 说明                                   | 类型               | 默认值    | 版本 |
 | ------------ | -------------------------------------- | ------------------ | --------- | ---- |
 | value        | 目标进度                               | *number*          | `0`     | -    |
-| size         | 圆环直径，默认单位为 `px`              | *string \| number* | `100`     | -    |
+| size         | 圆环直径，默认单位为 `px`              | *number* | `100`     | -    |
 | color        | 进度条颜色，传入对象格式可以定义渐变色 | *string \| object* | `#1989fa` | -    |
 | layer-color  | 轨道颜色                               | *string*           | `#fff`    | -    |
 | fill         | 填充颜色                               | *string*           | -    | -    |
@@ -102,4 +102,4 @@ Page({
 
 | 名称    | 说明           |
 | ------- | -------------- |
-| default | 自定义文字内容，如果设置了`fill`，插槽内容会被原生组件覆盖 |
+| - | 自定义文字内容，如果设置了`fill`，插槽内容会被原生组件覆盖 |

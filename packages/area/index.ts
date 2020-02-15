@@ -14,14 +14,26 @@ VantComponent({
 
   props: {
     ...pickerProps,
-    value: String,
+    value: {
+      type: String,
+      observer(value: string) {
+        this.code = value;
+        this.setValues();
+      },
+    },
     areaList: {
       type: Object,
-      value: {}
+      value: {},
+      observer: 'setValues'
     },
     columnsNum: {
       type: null,
-      value: 3
+      value: 3,
+      observer(value: number) {
+        this.setData({
+          displayColumns: this.data.columns.slice(0, +value)
+        });
+      }
     },
     columnsPlaceholder: {
       type: Array,
@@ -41,21 +53,6 @@ VantComponent({
     columns: [{ values: [] }, { values: [] }, { values: [] }],
     displayColumns: [{ values: [] }, { values: [] }, { values: [] }],
     typeToColumnsPlaceholder: {}
-  },
-
-  watch: {
-    value(value: string) {
-      this.code = value;
-      this.setValues();
-    },
-
-    areaList: 'setValues',
-
-    columnsNum(value: number) {
-      this.setData({
-        displayColumns: this.data.columns.slice(0, +value)
-      });
-    }
   },
 
   mounted() {
@@ -108,12 +105,10 @@ VantComponent({
     onChange(event: Weapp.Event) {
       const { index, picker, value } = event.detail;
       this.code = value[index].code;
-      let getValues = picker.getValues();
-      getValues = this.parseOutputValues(getValues);
       this.setValues().then(() => {
         this.$emit('change', {
           picker,
-          values: getValues,
+          values: this.parseOutputValues(picker.getValues()),
           index
         });
       });

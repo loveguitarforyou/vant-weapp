@@ -6,8 +6,8 @@
 
 ```json
 "usingComponents": {
-  "van-tabbar": "path/to/vant-weapp/dist/tabbar/index",
-  "van-tabbar-item": "path/to/vant-weapp/dist/tabbar-item/index"
+  "van-tabbar": "path/to/@vant/weapp/dist/tabbar/index",
+  "van-tabbar-item": "path/to/@vant/weapp/dist/tabbar-item/index"
 }
 ```
 
@@ -139,13 +139,43 @@ Page({
 });
 ```
 
+
+### 切换标签事件
+
+```html
+<van-tabbar
+  active="{{ active }}"
+  bind:change="onChange"
+>
+  <van-tabbar-item icon="home-o">标签1</van-tabbar-item>
+  <van-tabbar-item icon="search">标签2</van-tabbar-item>
+  <van-tabbar-item icon="friends-o">标签3</van-tabbar-item>
+  <van-tabbar-item icon="setting-o">标签4</van-tabbar-item>
+</van-tabbar>
+```
+
+```javascript
+Page({
+  data: {
+    active: 0,
+  },
+  onClick(event) {
+    wx.showToast({
+      title: `点击标签 ${event.detail + 1}`,
+      icon: 'none'
+    });
+  }
+});
+```
+
+
 ### 结合自定义 tabBar
 
 请参考 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/ability/custom-tabbar.html) 与 [代码片段](https://developers.weixin.qq.com/s/FjLU4mmp7r9s)
 
 ## API
 
-### Tabbar API
+### Tabbar Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-------------|-----------|
@@ -163,7 +193,7 @@ Page({
 |-----------|-----------|-----------|
 | bind:change | 切换标签时触发 | event.detail: 当前选中标签的名称或索引值 |
 
-### TabbarItem API
+### TabbarItem Props
 
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 |-----------|-----------|-----------|-----------|-----------|
